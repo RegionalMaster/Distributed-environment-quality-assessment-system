@@ -12,7 +12,7 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <BrowserRouter basename="/airwise-connection">
+      <BrowserRouter basename="/Distributed-environment-quality-assessment-system">
         <Routes>
           <Route path="/" element={<Index />} />
         </Routes>

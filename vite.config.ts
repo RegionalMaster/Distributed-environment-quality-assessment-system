@@ -4,7 +4,7 @@ import path from "path";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
-  base: '/airwise-connection/',
+  base: '/Distributed-environment-quality-assessment-system/',
   server: {
     host: "::",
     port: 8080,
