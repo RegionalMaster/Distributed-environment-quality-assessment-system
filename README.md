@@ -43,17 +43,79 @@ The system utilizes edge computing principles to process data locally, reducing 
 
 The AirwiseConnection system architecture comprises two main components: the hardware sensor array with its associated microcontroller unit, and the software stack that processes and presents the data. This section details the technical implementation of both components and their integration.
 
+### 2.1 System Overview with Bluetooth and Edge Computing
+
+The system operates entirely on edge computing principles, eliminating cloud dependency while maintaining robust functionality:
+
+#### Sensing Module:
+- Sensors collect air quality data and transmit it over Bluetooth to the mobile device
+- Utilizes ESP32 module for Bluetooth communication
+- Collects data for PM2.5, PM10, CO2, TVOC, temperature, and humidity
+
+#### Edge Device (Mobile Phone):
+- Functions as the central processing unit
+- Receives raw sensor data via Bluetooth
+- Processes data locally and displays real-time results
+- Implements Progressive Web App (PWA) for data visualization
+
+#### Edge Processing Architecture:
+- All data processing occurs on the mobile device
+- Data is stored temporarily in device memory or local storage
+- No cloud dependency required
+
+#### System Flow:
+1. User opens the PWA on their mobile device
+2. Bluetooth pairs the phone with the sensing module
+3. Sensing module transmits air quality data to phone
+4. Phone processes data locally to calculate AQI
+5. PWA displays results in real-time
+
+#### Advantages of Edge Processing with Bluetooth:
+- Local computation without external server dependency
+- Enhanced power efficiency through Bluetooth Low Energy
+- Improved portability for mobile and localized monitoring
+- Reduced latency in data processing and visualization
+- Enhanced privacy through local data handling
+
 ## 3. Technical Implementation
 
 ### 3.1 Hardware Architecture
 
-The hardware implementation centers around a carefully selected array of low-cost, high-precision sensors integrated with an energy-efficient microcontroller unit. At the core of the particulate matter sensing is the PMS7003 sensor, which employs laser scattering technology to detect particles ranging from 0.3 to 10 micrometers in diameter. This sensor achieves a measurement range of 0-500μg/m³ with 1μg/m³ resolution while maintaining remarkably low power consumption—drawing only 100mA during active sensing and dropping to 200μA in standby mode.
+The hardware implementation centers around a carefully selected array of low-cost, high-precision sensors integrated with an energy-efficient microcontroller unit.
 
-Carbon dioxide monitoring is accomplished through the SCD30 sensor, which utilizes NDIR dual-channel technology to provide highly accurate CO2 measurements. The sensor operates across a range of 400-10000ppm with an accuracy of ±(30ppm + 3%). Its power consumption is optimized at 19mA average draw, and it features automatic self-calibration capabilities that ensure long-term measurement stability.
+#### Sensor Array
+- **Particulate Matter**: PMS7003 sensor using laser scattering technology
+  - Range: 0-500μg/m³ with 1μg/m³ resolution
+  - Power consumption: 100mA active, 200μA standby
 
-For volatile organic compound detection, we employ the SGP30 multi-pixel gas sensor. This advanced sensor can detect TVOC concentrations up to 60000ppb and includes on-chip humidity compensation for improved accuracy. Environmental conditions are monitored using the SHT31 sensor, providing temperature measurements accurate to ±0.3°C and relative humidity readings with ±2% RH accuracy.
+- **Carbon Dioxide**: SCD30 sensor with NDIR dual-channel technology
+  - Range: 400-10000ppm with ±(30ppm + 3%) accuracy
+  - Power consumption: 19mA average
+  - Features automatic self-calibration
 
-The system's brain is the ESP32-WROOM-32 microcontroller, featuring a dual-core Xtensa® 32-bit LX6 microprocessor operating at 240 MHz. This powerful yet efficient processor is equipped with 520 KB of SRAM and 4 MB of flash storage, providing ample space for both program execution and data storage. The ESP32's integrated Wi-Fi and Bluetooth capabilities are crucial for our implementation, while its sophisticated power management system allows for various operating modes—from full-power operation at 160-260mA to deep-sleep drawing only 10μA.
+- **VOC Detection**: SGP30 multi-pixel gas sensor
+  - TVOC detection up to 60000ppb
+  - On-chip humidity compensation
+
+- **Environmental Conditions**: SHT31 sensor
+  - Temperature accuracy: ±0.3°C
+  - Relative humidity accuracy: ±2% RH
+
+#### Microcontroller and Communication
+- **ESP32-WROOM-32 Microcontroller**:
+  - Dual-core Xtensa® 32-bit LX6 microprocessor at 240 MHz
+  - 520 KB SRAM and 4 MB flash storage
+  - Integrated Bluetooth module for sensor communication
+  - Power consumption:
+    - Full-power operation: 160-260mA
+    - Deep-sleep mode: 10μA
+
+- **Bluetooth Communication**:
+  - Uses ESP32's built-in Bluetooth capabilities
+  - Implements Bluetooth Low Energy (BLE) for power efficiency
+  - Range optimized for indoor monitoring
+  - Supports direct pairing with mobile devices
+  - Configurable transmission intervals for power optimization
 
 ### 3.2 Power Management System
 
