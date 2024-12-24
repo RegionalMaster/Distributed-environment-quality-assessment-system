@@ -43,6 +43,9 @@ The system utilizes edge computing principles to process data locally, reducing 
 
 The AirwiseConnection system architecture comprises two main components: the hardware sensor array with its associated microcontroller unit, and the software stack that processes and presents the data. This section details the technical implementation of both components and their integration.
 
+![System Architecture](./assets/system_architecture.png)
+*Figure 1: AirwiseConnection System Architecture showing the five main layers: Sensing, Data Acquisition, Communication, Edge Processing, and Application layers.*
+
 ### 2.1 System Overview with Bluetooth and Edge Computing
 
 The system operates entirely on edge computing principles, eliminating cloud dependency while maintaining robust functionality:
