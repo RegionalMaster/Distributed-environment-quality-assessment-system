@@ -197,14 +197,6 @@ The AirwiseConnection system demonstrates significant improvements in real-time 
 
 AirwiseConnection presents a novel approach to real-time air quality monitoring, leveraging edge computing and IoT technologies to provide a user-friendly, energy-efficient, and cost-effective solution. The system's technical innovations, including its sophisticated data processing pipeline, power management system, and communication protocol, make it an attractive option for widespread deployment in various settings. Future work will focus on enhancing the system's capabilities, exploring new applications, and improving its performance.
 
-## References
-
-1. World Health Organization. (2021). WHO global air quality guidelines.
-2. Environmental Protection Agency. (2016). Technical Assistance Document for the Reporting of Daily Air Quality.
-3. Kumar, P., et al. (2019). Real-time sensors for indoor air monitoring and challenges ahead in deploying them to urban buildings.
-4. React Query Documentation. (2023). Tanstack Query.
-5. Web Bluetooth API Specification. (2023). W3C.
-
 ## Appendices
 
 ### Appendix A: Data Processing Pipeline Implementation
