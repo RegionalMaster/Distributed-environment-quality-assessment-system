@@ -1,6 +1,6 @@
 # Airwise Connection
 
-App I am working on for realtime low cost air quality monitoring.
+App I am working on for realtime low cost air quality monitoring. You may view working deployed version [here](https://regionalmaster.github.io/Distributed-environment-quality-assessment-system/).
 
 ### Prerequisites
 - Node.js (v18 or higher)
