@@ -1,10 +1,25 @@
-import { createRoot } from 'react-dom/client'
-import { StrictMode } from 'react'
+import React from 'react'
+import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
+import { registerSW } from 'virtual:pwa-register'
 
-createRoot(document.getElementById("root")!).render(
-  <StrictMode>
+// Optional: Auto update service worker
+const updateSW = registerSW({ 
+  immediate: true,
+  onNeedRefresh() {
+    // Prompt user for refresh
+    if (confirm('New content available. Reload?')) {
+      updateSW(true);
+    }
+  },
+  onOfflineReady() {
+    console.log('App is ready to work offline');
+  }
+});
+
+ReactDOM.createRoot(document.getElementById('root')!).render(
+  <React.StrictMode>
     <App />
-  </StrictMode>
-);
+  </React.StrictMode>,
+)
