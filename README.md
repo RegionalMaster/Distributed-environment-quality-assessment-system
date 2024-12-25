@@ -192,6 +192,108 @@ interface PowerState {
 
 This state model drives the dynamic power adjustment system. The full implementation of power management algorithms, including temperature monitoring and frequency scaling, is provided in Appendix D.
 
+## Progressive Web Application (PWA) Architecture
+
+### The Essence of Progressive Web Applications
+
+At its core, a Progressive Web Application is not merely a website, but a sophisticated digital ecosystem that adapts and responds to user interactions across diverse devices and network conditions. Unlike traditional web applications, PWAs leverage cutting-edge web APIs and design principles to deliver an experience that feels native, responsive, and seamless.
+
+### The Technical Architecture of Resilience
+
+The magic of Airwise Connection's PWA lies in its meticulously crafted service worker implementation. Service workers act as intelligent network proxies, sitting between the web application and the network, intercepting and managing network requests with unprecedented granularity.
+
+Consider the service worker's installation phase:
+
+```javascript
+self.addEventListener('install', (event) => {
+  event.waitUntil(
+    caches.open(CACHE_NAME)
+      .then((cache) => cache.addAll(urlsToCache))
+  );
+});
+```
+
+This seemingly simple code snippet encapsulates a powerful concept: proactive asset caching. Before the application even loads, critical resources are stored locally, ensuring lightning-fast subsequent loads and providing a robust offline experience.
+
+### Offline-First: A Paradigm Shift
+
+Traditional web applications crumble when internet connectivity becomes unstable. Airwise Connection takes a radically different approach. By implementing a "network-first with intelligent fallback" strategy, the application remains functional even in challenging network environments.
+
+The fetch event handler in the service worker demonstrates this resilience:
+
+```javascript
+self.addEventListener('fetch', (event) => {
+  event.respondWith(
+    caches.match(event.request)
+      .then((response) => {
+        return response || fetch(event.request);
+      })
+  );
+});
+```
+
+This code ensures that if a network request fails, the application can seamlessly serve cached content, maintaining a smooth user experience.
+
+### Manifest: The Digital Identity
+
+Beyond technical implementation, PWAs require a digital identity. The `manifest.json` file in Airwise Connection is more than a configuration—it's a declaration of the application's intent and personality.
+
+```json
+{
+  "name": "Air Quality Monitor",
+  "short_name": "AQI Monitor",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#000000"
+}
+```
+
+These few lines enable the application to be "installed" on a user's device, complete with custom icons and a standalone launch experience that mimics native mobile applications.
+
+### Performance and Optimization
+
+Leveraging Vite's PWA plugin, Airwise Connection implements sophisticated caching and runtime strategies. The configuration goes beyond simple asset storage, implementing intelligent caching mechanisms that balance performance with data freshness.
+
+```typescript
+VitePWA({
+  workbox: {
+    runtimeCaching: [
+      {
+        urlPattern: /^https:\/\/api\.example\.com\/.*/i,
+        handler: 'CacheFirst',
+        options: {
+          expiration: {
+            maxEntries: 10,
+            maxAgeSeconds: 24 * 60 * 60
+          }
+        }
+      }
+    ]
+  }
+})
+```
+
+This configuration ensures that API responses are cached efficiently, reducing unnecessary network requests and improving overall application responsiveness.
+
+### User-Centric Update Mechanism
+
+The application doesn't just work offline—it communicates its state transparently:
+
+```typescript
+registerSW({
+  onNeedRefresh() {
+    if (confirm('New content available. Reload?')) {
+      updateSW(true);
+    }
+  },
+  onOfflineReady() {
+    console.log('App is ready to work offline');
+  }
+});
+```
+
+This code snippet embodies a philosophy of user empowerment, giving users control over updates while maintaining a smooth, uninterrupted experience.
+
 ## 4. Results and Discussion
 
 The AirwiseConnection system demonstrates significant improvements in real-time air quality monitoring, achieving high accuracy and reliability while maintaining low energy consumption and cost-effectiveness. The edge computing approach enables efficient data processing and storage, reducing cloud dependency and minimizing latency. The system's modular design and open architecture facilitate easy integration with various sensors and devices, making it a versatile solution for diverse applications.
